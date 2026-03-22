@@ -1,0 +1,187 @@
+:root {
+    --bg-color: #0c0e14;
+    --petal-color: #ffcc00;
+    --parchment: #fdfaf1;
+    --accent-red: #A31D1D;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: radial-gradient(circle at center, #1b1d24 0%, #0c0e14 100%);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* --- ENVELOPE OPENING SYSTEM --- */
+#envelope-system {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 1s ease;
+}
+
+.envelope-wrapper {
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 320px;
+    height: 220px;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #d3cbb0;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-top: 110px solid #c2b79a;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.6s ease, z-index 0.2s 0.2s;
+}
+
+.envelope-wrapper.open .envelope::before {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.wax-seal {
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at 35% 35%, #bf302d, #7a1512);
+    border-radius: 50%;
+    position: absolute;
+    z-index: 4;
+    top: 80px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    color: rgba(0,0,0,0.3);
+    font-size: 2rem;
+    transition: 0.4s ease;
+}
+
+.envelope-wrapper.open .wax-seal {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.letter-content-wrap {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    width: 90vw;
+    max-width: 450px;
+    height: auto;
+    background: var(--parchment);
+    padding: 60px 40px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    z-index: 10;
+    text-align: center;
+    background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+}
+
+.envelope-wrapper.open .letter-content-wrap {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.letter-content-wrap .quote {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #444;
+    text-shadow: none;
+}
+
+.regar-btn {
+    background: #fdfaf1;
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+    padding: 12px 0;
+    width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.regar-btn:hover {
+    background: var(--accent-red);
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(163, 29, 29, 0.3);
+}
+
+/* --- FLOWER SYSTEM STYLES --- */
+.container { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+canvas { filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.3)); max-width: 100%; }
+
+.final-message {
+    position: absolute; 
+    top: 10%; 
+    width: 95%;
+    text-align: center;
+    opacity: 0; 
+    transition: opacity 2.5s ease; 
+    pointer-events: none; 
+    z-index: 10;
+}
+
+.final-message h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: 2px; margin-bottom: 15px; color: var(--petal-color); }
+.final-message .quote { font-size: clamp(1rem, 4vw, 1.35rem); font-style: italic; opacity: 0.9; margin: 10px auto; }
+.final-message .declaration { font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: 700; color: var(--petal-color); margin-top: 15px !important; text-shadow: 0 0 15px rgba(255, 204, 0, 0.4); }
+.final-message .signature { font-size: 0.85rem; opacity: 0.6; letter-spacing: 3px; margin-top: 10px !important; text-transform: uppercase; }
+.final-message p { font-family: 'Montserrat', sans-serif; font-weight: 300; max-width: 85%; margin: 10px auto; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
+
+#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 480px) {
+    .envelope-wrapper { width: 280px; height: 180px; }
+    .envelope::before { border-top-width: 90px; border-left-width: 140px; border-right-width: 140px; }
+    .wax-seal { top: 60px; width: 50px; height: 50px; font-size: 1.5rem; }
+    .letter-content-wrap { padding: 40px 25px; }
+    .letter-content-wrap .quote { font-size: 1.25rem; }
+    .regar-btn { width: 180px; }
+}
+
+@media (max-height: 600px) {
+    .letter-content-wrap { padding: 30px 20px; }
+    .letter-content-wrap .quote { font-size: 1.15rem; margin-bottom: 20px; }
+    .final-message { top: 5%; }
+}
